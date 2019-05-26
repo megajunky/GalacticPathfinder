@@ -1,4 +1,3 @@
-from FibonacciHeap import FibonacciHeap
 from BinaryHeap import BinaryHeap
 import json, time
 from functools import reduce
@@ -35,9 +34,7 @@ class Graph:
         self.nodes = list(map(lambda x: x["label"], data["nodes"]))
 
 def find(graph, start, goal):
-    open_list = FibonacciHeap()
-    #my fibheap implementation is to slow
-    #open_list = BinaryHeap()
+    open_list = BinaryHeap()
 
     closed_list = {}
 
@@ -84,10 +81,11 @@ if __name__ == "__main__":
     start = graph.find("Erde")
     end = graph.find("b3-r7-r4nd7")
 
-    closed_list = timer(find, (graph, start, end))
+    #closed_list = timer(find, (graph, start, end))
+    closed_list = find(graph, start, end)
     path = retrace_path(closed_list, start, end)
-    print("Path:")
-    print("".join(f"{node} -> " for _, node in reversed(path)) + str(end))
     total_dist = reduce(lambda a,c: a+c[0], path, 0)
+
+    print("Path:" + "".join(f"{node} -> " for _, node in reversed(path)) + str(end))
     print(f"Total Distance: {total_dist}")
 
